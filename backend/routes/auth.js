@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(400).json({ error: 'Invalid credentials' });
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ error: 'Invalid credentials' });
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
   } catch (err) {
     res.status(500).json({ error: 'Login failed' });
@@ -37,7 +37,7 @@ router.post('/recover', async (req, res) => {
     if (!user) return res.status(400).json({ error: 'User not found' });
     const token = Math.random().toString(36).substring(2);
     user.resetToken = token;
-    user.resetTokenExp = Date.now() + 3600000;
+    user.resetTokenExp = Date.now() + 24 * 60 * 60 * 1000;
     await user.save();
     res.json({ message: 'Recovery token generated' });
   } catch (err) {
