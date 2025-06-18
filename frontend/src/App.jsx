@@ -7,6 +7,7 @@ import Compare from "./pages/Compare.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
 import Profile from "./pages/Profile.jsx";
 import UploadPolicy from "./pages/UploadPolicy.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 function Navbar() {
   return (
@@ -26,18 +27,20 @@ function Navbar() {
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/compare" element={<Compare />} />
-        <Route path="/recommendations" element={<Recommendations />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/upload-policy" element={<UploadPolicy />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/recommendations" element={<Recommendations />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/upload-policy" element={<UploadPolicy />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
