@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { AuthProvider } from "./AuthContext.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
@@ -26,18 +27,20 @@ function Navbar() {
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/compare" element={<Compare />} />
-        <Route path="/recommendations" element={<Recommendations />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/upload-policy" element={<UploadPolicy />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/recommendations" element={<Recommendations />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/upload-policy" element={<UploadPolicy />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
