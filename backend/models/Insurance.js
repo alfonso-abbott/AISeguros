@@ -4,7 +4,9 @@ const insuranceSchema = new mongoose.Schema({
   name: String,
   type: String,
   price: Number,
-  details: String
+  coverage: String,
+  details: String,
+  edadMin: Number
 });
 
 module.exports = mongoose.model('Insurance', insuranceSchema);

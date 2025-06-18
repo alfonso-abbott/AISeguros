@@ -1,25 +1,25 @@
 import { useState, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext.jsx';
+import { UserContext } from '../context/UserContext.jsx';
 
 export default function Login() {
-  const { login } = useContext(AuthContext);
-  const [username, setUsername] = useState('');
+  const { login } = useContext(UserContext);
+  const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:5000/api/login', {
+    const res = await fetch('http://localhost:5000/api/usuarios/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ correo, password }),
     });
     const data = await res.json();
-    if (data.token) {
+    if (res.ok) {
       login(data.user, data.token);
       setError('');
     } else {
-      setError('Credenciales inválidas');
+      setError(data.error || 'Credenciales inválidas');
     }
   };
 
@@ -29,9 +29,9 @@ export default function Login() {
       <form onSubmit={handleSubmit} className='space-y-4 max-w-sm mx-auto'>
         <input
           className='border w-full p-2'
-          placeholder='Usuario'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder='Correo'
+          value={correo}
+          onChange={(e) => setCorreo(e.target.value)}
         />
         <input
           className='border w-full p-2'
