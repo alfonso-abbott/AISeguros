@@ -1,10 +1,29 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
 import segurosData from '../data/segurosData.js';
+import {
+  BENEFICIOS_POSIBLES,
+  EXCLUSIONES_POSIBLES
+} from '../data/filtrosOpciones.js';
 
 export default function CotizacionesTipo() {
   const { tipo } = useParams();
   const segurosDelTipo = segurosData.filter(s => s.tipo === tipo);
+
+  const coberturasUnicas = Array.from(
+    new Set(segurosDelTipo.map(s => s.cobertura))
+  );
+  const precios = segurosDelTipo.map(s => s.precio);
+  const minPrecio = Math.min(...precios);
+  const maxPrecio = Math.max(...precios);
+  const pasosPrecio = [];
+  for (
+    let p = Math.floor(minPrecio / 10000) * 10000;
+    p <= Math.ceil(maxPrecio / 10000) * 10000;
+    p += 10000
+  ) {
+    pasosPrecio.push(p);
+  }
 
   const [filtroNombre, setFiltroNombre] = useState("");
   const [filtroCobertura, setFiltroCobertura] = useState("");
@@ -55,41 +74,63 @@ export default function CotizacionesTipo() {
         <select
           value={filtroCobertura}
           onChange={e => setFiltroCobertura(e.target.value)}
-          className="border rounded px-2 py-1 w-40"
+          className="border rounded px-2 py-1 w-40 capitalize"
         >
           <option value="">Cobertura</option>
-          <option value="basica">Básica</option>
-          <option value="amplia">Amplia</option>
-          <option value="total">Total</option>
+          {coberturasUnicas.map(c => (
+            <option key={c} value={c} className="capitalize">
+              {c}
+            </option>
+          ))}
         </select>
-        <input
-          type="number"
-          placeholder="Precio mínimo"
-          value={filtroMin}
-          onChange={e => setFiltroMin(e.target.value)}
-          className="border rounded px-2 py-1 w-28"
-        />
-        <input
-          type="number"
-          placeholder="Precio máximo"
-          value={filtroMax}
-          onChange={e => setFiltroMax(e.target.value)}
-          className="border rounded px-2 py-1 w-28"
-        />
-        <input
-          type="text"
-          placeholder="Filtrar por beneficio"
+        <select
           value={filtroBeneficio}
           onChange={e => setFiltroBeneficio(e.target.value)}
           className="border rounded px-2 py-1 w-48"
-        />
-        <input
-          type="text"
-          placeholder="Filtrar por exclusión"
+        >
+          <option value="">Beneficio</option>
+          {BENEFICIOS_POSIBLES.map(b => (
+            <option key={b} value={b}>
+              {b}
+            </option>
+          ))}
+        </select>
+        <select
           value={filtroExclusion}
           onChange={e => setFiltroExclusion(e.target.value)}
           className="border rounded px-2 py-1 w-48"
-        />
+        >
+          <option value="">Exclusión</option>
+          {EXCLUSIONES_POSIBLES.map(e => (
+            <option key={e} value={e}>
+              {e}
+            </option>
+          ))}
+        </select>
+        <select
+          value={filtroMin}
+          onChange={e => setFiltroMin(e.target.value)}
+          className="border rounded px-2 py-1 w-28"
+        >
+          <option value="">Precio mínimo</option>
+          {pasosPrecio.map(p => (
+            <option key={p} value={p}>
+              {formatCLP(p)}
+            </option>
+          ))}
+        </select>
+        <select
+          value={filtroMax}
+          onChange={e => setFiltroMax(e.target.value)}
+          className="border rounded px-2 py-1 w-28"
+        >
+          <option value="">Precio máximo</option>
+          {pasosPrecio.map(p => (
+            <option key={p} value={p}>
+              {formatCLP(p)}
+            </option>
+          ))}
+        </select>
       </div>
 
       {segurosFiltrados.length === 0 ? (
