@@ -20,7 +20,7 @@ function Navbar() {
     <nav className="bg-white shadow px-4 py-3 mb-4">
       <ul className="flex flex-wrap gap-4 text-sm font-medium">
         <li><Link to="/">Inicio</Link></li>
-        {token && <li><Link to="/cotizaciones">Cotizaciones</Link></li>}
+        <li><Link to="/cotizaciones">Cotizaciones</Link></li>
         <li><Link to="/recommendations">Recomendaciones</Link></li>
         {token && <li><Link to="/upload-policy">Pólizas</Link></li>}
         <li><Link to="/contact">Contacto</Link></li>

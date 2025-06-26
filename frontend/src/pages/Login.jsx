@@ -20,7 +20,7 @@ export default function Login() {
     const data = await res.json();
     if (res.ok) {
       login(data.token, data.name);
-      navigate('/dashboard');
+      navigate('/');
     } else {
       setError(data.error || 'Error al iniciar sesión');
     }

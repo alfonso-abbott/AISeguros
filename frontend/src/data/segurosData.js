@@ -1,8 +1,20 @@
-const tipos = ["auto", "vida", "mascotas", "salud", "viajes", "hogar"]; 
-let id = 1; 
-const seguros = []; 
+import { BENEFICIOS_POSIBLES, EXCLUSIONES_POSIBLES } from './filtrosOpciones.js';
+
+const tipos = ["auto", "vida", "mascotas", "salud", "viajes", "hogar"];
+let id = 1;
+const seguros = [];
+
+function sample(list, count) {
+  const selected = new Set();
+  while (selected.size < count) {
+    const item = list[Math.floor(Math.random() * list.length)];
+    selected.add(item);
+  }
+  return Array.from(selected);
+}
+
 tipos.forEach(tipo => {
-  for (let i = 1; i <= 20; i++) {
+  for (let i = 1; i <= 30; i++) {
     seguros.push({
       id: id++,
       tipo,
@@ -10,8 +22,8 @@ tipos.forEach(tipo => {
       cobertura: ["basica", "amplia", "total"][i % 3],
       precio: 150000 + i * 5000,
       descripcion: `Cobertura completa para ${tipo}, plan ${i}.`,
-      beneficios: ["Asistencia 24/7", "Cobertura internacional", "Atención preferente"],
-      exclusiones: ["Uso comercial", "Eventos extremos"],
+      beneficios: sample(BENEFICIOS_POSIBLES, 3),
+      exclusiones: sample(EXCLUSIONES_POSIBLES, 3),
       contacto: {
         telefono: "+56987654321",
         correo: "contacto@aiseguros.cl"
@@ -19,4 +31,5 @@ tipos.forEach(tipo => {
     });
   }
 });
+
 export default seguros;
