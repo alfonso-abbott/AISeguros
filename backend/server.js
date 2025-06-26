@@ -14,6 +14,7 @@ const segurosRoutes = require("./routes/seguros");
 const recomendacionesRoutes = require("./routes/recomendaciones");
 const polizasRoutes = require("./routes/polizas");
 const contactoRoutes = require("./routes/contacto");
+const usersRoutes = require("./routes/users");
 
 app.use(cors());
 app.use(express.json());
@@ -29,6 +30,7 @@ app.use("/api/seguros", segurosRoutes);
 app.use("/api/recomendaciones", recomendacionesRoutes);
 app.use("/api/polizas", polizasRoutes);
 app.use("/api/contacto", contactoRoutes);
+app.use("/api/users", usersRoutes);
 
 function start(p) {
   const server = app

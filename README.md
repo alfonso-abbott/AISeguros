@@ -54,5 +54,6 @@ POST http://localhost:5000/api/auth/register
 **Listar usuarios**
 
 ```
-GET http://localhost:5000/api/auth/usuarios
+GET http://localhost:5000/api/users
+Authorization: Bearer <token>
 ```
