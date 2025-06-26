@@ -10,6 +10,8 @@ export default function CotizacionesTipo() {
   const [filtroCobertura, setFiltroCobertura] = useState("");
   const [filtroMin, setFiltroMin] = useState("");
   const [filtroMax, setFiltroMax] = useState("");
+  const [filtroBeneficio, setFiltroBeneficio] = useState("");
+  const [filtroExclusion, setFiltroExclusion] = useState("");
 
   const segurosFiltrados = segurosDelTipo.filter(seguro => {
     const nombreCoincide = seguro.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
@@ -18,7 +20,23 @@ export default function CotizacionesTipo() {
     const precioCoincide =
       (!filtroMin || seguro.precio >= parseInt(filtroMin)) &&
       (!filtroMax || seguro.precio <= parseInt(filtroMax));
-    return nombreCoincide && coberturaCoincide && precioCoincide;
+    const beneficioCoincide =
+      !filtroBeneficio ||
+      seguro.beneficios.some(b =>
+        b.toLowerCase().includes(filtroBeneficio.toLowerCase())
+      );
+    const exclusionCoincide =
+      !filtroExclusion ||
+      seguro.exclusiones.some(e =>
+        e.toLowerCase().includes(filtroExclusion.toLowerCase())
+      );
+    return (
+      nombreCoincide &&
+      coberturaCoincide &&
+      precioCoincide &&
+      beneficioCoincide &&
+      exclusionCoincide
+    );
   });
 
   const formatCLP = n => new Intl.NumberFormat('es-CL').format(n);
@@ -58,6 +76,20 @@ export default function CotizacionesTipo() {
           onChange={e => setFiltroMax(e.target.value)}
           className="border rounded px-2 py-1 w-28"
         />
+        <input
+          type="text"
+          placeholder="Filtrar por beneficio"
+          value={filtroBeneficio}
+          onChange={e => setFiltroBeneficio(e.target.value)}
+          className="border rounded px-2 py-1 w-48"
+        />
+        <input
+          type="text"
+          placeholder="Filtrar por exclusión"
+          value={filtroExclusion}
+          onChange={e => setFiltroExclusion(e.target.value)}
+          className="border rounded px-2 py-1 w-48"
+        />
       </div>
 
       {segurosFiltrados.length === 0 ? (
@@ -68,10 +100,20 @@ export default function CotizacionesTipo() {
             <div key={seguro.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition flex flex-col">
               <h3 className="font-semibold text-lg mb-1 text-teal-700">{seguro.nombre}</h3>
               <p className="text-sm mb-1 capitalize">Cobertura: {seguro.cobertura}</p>
-              <p className="text-sm mb-2">{seguro.descripcion}</p>
-              <p className="font-bold mb-3">${formatCLP(seguro.precio)}</p>
-              <Link to={`/cotizaciones/${tipo}/${seguro.id}`} className="mt-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg text-center">Ver detalles</Link>
-            </div>
+          <p className="text-sm mb-2">{seguro.descripcion}</p>
+          <p className="font-bold mb-3">${formatCLP(seguro.precio)}</p>
+          <ul className="list-disc pl-4 text-sm text-green-800">
+            {seguro.beneficios.map(b => (
+              <li key={b}>✔️ {b}</li>
+            ))}
+          </ul>
+          <ul className="list-disc pl-4 text-sm text-red-800 mt-2">
+            {seguro.exclusiones.map(e => (
+              <li key={e}>❌ {e}</li>
+            ))}
+          </ul>
+          <Link to={`/cotizaciones/${tipo}/${seguro.id}`} className="mt-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg text-center">Ver detalles</Link>
+        </div>
           ))}
         </div>
       )}

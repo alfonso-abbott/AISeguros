@@ -6,13 +6,15 @@ export default function Contact() {
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    await fetch('/api/contacto', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
+    console.log({
+      nombre: form.name,
+      correo: form.email,
+      tipo: form.tipo,
+      mensaje: form.mensaje,
     });
+    alert("Mensaje enviado. Pronto nos contactaremos contigo.");
     setSent(true);
   };
 
