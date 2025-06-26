@@ -15,6 +15,7 @@ const authRoutes = require("./routes/auth");
 const segurosRoutes = require("./routes/seguros");
 const recomendacionesRoutes = require("./routes/recomendaciones");
 const polizasRoutes = require("./routes/polizas");
+const polizaComparar = require("./routes/polizaComparar");
 const contactoRoutes = require("./routes/contacto");
 const usersRoutes = require("./routes/users");
 
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/seguros", segurosRoutes);
 app.use("/api/recomendaciones", recomendacionesRoutes);
 app.use("/api/polizas", polizasRoutes);
+app.use("/api/polizas", polizaComparar);
 app.use("/api/contacto", contactoRoutes);
 app.use("/api/users", usersRoutes);
 
