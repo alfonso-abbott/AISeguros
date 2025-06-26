@@ -26,23 +26,27 @@ router.post('/comparar', upload.single('file'), async (req, res) => {
       return res.status(400).json({ error: 'Formato no soportado' });
     }
 
+    if (!text || !text.trim()) {
+      throw new Error('No se pudo extraer texto del archivo');
+    }
+
     const tipoSeguro = extraerValor(text, /Tipo de seguro:\s*(.+)/i);
     const cobertura = extraerValor(text, /Cobertura:\s*(.+)/i);
     const precio = extraerValor(text, /Precio mensual:\s*(.+)/i);
     const beneficios = extraerLista(text, /BENEFICIOS INCLUIDOS/i);
     const exclusiones = extraerLista(text, /EXCLUSIONES/i);
 
-    const resultado = {
-      tipoSeguro,
-      cobertura,
-      precio,
-      beneficios,
-      exclusiones,
-    };
+    const campos = { tipoSeguro, cobertura, precio, beneficios, exclusiones };
+    for (const [campo, valor] of Object.entries(campos)) {
+      if (!valor || (Array.isArray(valor) && valor.length === 0)) {
+        return res.status(400).json({ error: `No se encontr\u00f3 el campo ${campo}` });
+      }
+    }
 
-    res.json({ resultado });
+    res.json({ resultado: campos });
   } catch (err) {
-    res.status(500).json({ error: 'Error procesando archivo' });
+    console.error('Error procesando archivo:', err);
+    res.status(500).json({ error: err.message || 'Error procesando archivo' });
   } finally {
     fs.unlink(filePath, () => {});
   }
