@@ -33,6 +33,7 @@ export default function Login() {
       <input name="email" placeholder="Correo" onChange={handleChange} className="border p-2" />
       <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} className="border p-2" />
       <button className="bg-blue-500 text-white p-2" type="submit">Entrar</button>
+      <a href="/forgot-password" className="text-sm text-blue-600 text-center">¿Olvidaste tu contraseña?</a>
     </form>
   );
 }

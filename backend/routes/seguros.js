@@ -13,4 +13,14 @@ router.get('/', (req, res) => {
   res.json(seguros);
 });
 
+router.post('/filtrar', (req, res) => {
+  const { tipo, cobertura, min, max } = req.body;
+  let segurosFiltrados = [...mock];
+  if (tipo) segurosFiltrados = segurosFiltrados.filter(s => s.tipo === tipo);
+  if (cobertura) segurosFiltrados = segurosFiltrados.filter(s => s.cobertura === cobertura);
+  if (min) segurosFiltrados = segurosFiltrados.filter(s => s.precio >= Number(min));
+  if (max) segurosFiltrados = segurosFiltrados.filter(s => s.precio <= Number(max));
+  res.json(segurosFiltrados);
+});
+
 module.exports = router;

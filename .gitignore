@@ -1,6 +1,9 @@
 # Node dependencies
 node_modules
 
+# Uploaded files
+backend/uploads
+
 # Logs
 npm-debug.log*
 
