@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+let port = process.env.PORT ? Number(process.env.PORT) : 5000;
 
 // Rutas
 const authRoutes = require("./routes/auth");
@@ -30,6 +30,20 @@ app.use("/api/recomendaciones", recomendacionesRoutes);
 app.use("/api/polizas", polizasRoutes);
 app.use("/api/contacto", contactoRoutes);
 
-app.listen(port, () => {
-  console.log(`Servidor backend corriendo en http://localhost:${port}`);
-});
+function start(p) {
+  const server = app
+    .listen(p, () => {
+      port = p;
+      console.log(`Servidor backend corriendo en http://localhost:${p}`);
+    })
+    .on("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        console.log(`Puerto ${p} en uso, intentando ${p + 1}`);
+        start(p + 1);
+      } else {
+        console.error("Error al iniciar servidor", err);
+      }
+    });
+}
+
+start(port);
