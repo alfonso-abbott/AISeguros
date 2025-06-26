@@ -4,6 +4,8 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Cotizaciones from "./pages/Cotizaciones.jsx";
+import CotizacionesTipo from "./pages/CotizacionesTipo.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
 import UploadPolicy from "./pages/UploadPolicy.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -18,7 +20,7 @@ function Navbar() {
     <nav className="bg-white shadow px-4 py-3 mb-4">
       <ul className="flex flex-wrap gap-4 text-sm font-medium">
         <li><Link to="/">Inicio</Link></li>
-        {token && <li><Link to="/dashboard">Cotizaciones</Link></li>}
+        {token && <li><Link to="/cotizaciones">Cotizaciones</Link></li>}
         <li><Link to="/recommendations">Recomendaciones</Link></li>
         {token && <li><Link to="/upload-policy">Pólizas</Link></li>}
         <li><Link to="/contact">Contacto</Link></li>
@@ -40,6 +42,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/cotizaciones" element={<Cotizaciones />} />
+        <Route path="/cotizaciones/:tipo" element={<CotizacionesTipo />} />
+        <Route path="/cotizaciones/:tipo/:id" element={<SeguroDetalle />} />
         <Route path="/recommendations" element={<Recommendations />} />
         <Route path="/upload-policy" element={<UploadPolicy />} />
         <Route path="/seguro/:id" element={<SeguroDetalle />} />
