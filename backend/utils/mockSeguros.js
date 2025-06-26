@@ -2,6 +2,8 @@ module.exports = [
   {
     name: 'Seguro Auto Básico',
     tipo: 'auto',
+    edadMin: 18,
+    edadMax: 65,
     cobertura: 'basica',
     precio: 150000,
     descripcion: 'Protege tu auto con cobertura mínima contra terceros.',
@@ -11,6 +13,8 @@ module.exports = [
   {
     name: 'Seguro Auto Full',
     tipo: 'auto',
+    edadMin: 18,
+    edadMax: 65,
     cobertura: 'total',
     precio: 350000,
     descripcion: 'Cobertura completa para daños propios y a terceros.',
@@ -20,6 +24,8 @@ module.exports = [
   {
     name: 'Seguro Hogar Básico',
     tipo: 'hogar',
+    edadMin: 18,
+    edadMax: 80,
     cobertura: 'basica',
     precio: 90000,
     descripcion: 'Protección esencial para tu vivienda ante incendios.',
@@ -29,6 +35,8 @@ module.exports = [
   {
     name: 'Seguro Hogar Premium',
     tipo: 'hogar',
+    edadMin: 18,
+    edadMax: 80,
     cobertura: 'amplia',
     precio: 180000,
     descripcion: 'Incluye robo, daños por agua y responsabilidad civil.',
@@ -38,6 +46,8 @@ module.exports = [
   {
     name: 'Seguro Vida Integral',
     tipo: 'vida',
+    edadMin: 18,
+    edadMax: 70,
     cobertura: 'total',
     precio: 220000,
     descripcion: 'Respaldo económico completo para tu familia.',
@@ -47,6 +57,8 @@ module.exports = [
   {
     name: 'Seguro Salud Familiar',
     tipo: 'salud',
+    edadMin: 0,
+    edadMax: 99,
     cobertura: 'amplia',
     precio: 200000,
     descripcion: 'Cobertura médica para todo el grupo familiar.',
@@ -56,6 +68,8 @@ module.exports = [
   {
     name: 'Seguro Viaje',
     tipo: 'viaje',
+    edadMin: 0,
+    edadMax: 75,
     cobertura: 'amplia',
     precio: 70000,
     descripcion: 'Asistencia médica y cancelaciones durante tu viaje.',
@@ -65,6 +79,8 @@ module.exports = [
   {
     name: 'Seguro Mascotas',
     tipo: 'mascotas',
+    edadMin: 18,
+    edadMax: 70,
     cobertura: 'basica',
     precio: 50000,
     descripcion: 'Cubre emergencias veterinarias para tus mascotas.',
@@ -74,6 +90,8 @@ module.exports = [
   {
     name: 'Seguro Electrónicos',
     tipo: 'hogar',
+    edadMin: 18,
+    edadMax: 80,
     cobertura: 'total',
     precio: 80000,
     descripcion: 'Protección ante daños o robo de tus dispositivos.',
@@ -83,6 +101,8 @@ module.exports = [
   {
     name: 'Seguro Pyme',
     tipo: 'empresa',
+    edadMin: 18,
+    edadMax: 70,
     cobertura: 'amplia',
     precio: 300000,
     descripcion: 'Seguro integral para pequeñas y medianas empresas.',
