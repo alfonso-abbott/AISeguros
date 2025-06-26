@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const Seguro = require("./models/Seguro");
+const defaultSeguros = require("./utils/mockSeguros");
 
 dotenv.config();
 
@@ -22,7 +24,14 @@ app.use(express.json());
 // Conexión a MongoDB
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://localhost:27017/aiseguros")
-  .then(() => console.log("MongoDB conectado"))
+  .then(async () => {
+    console.log("MongoDB conectado");
+    const count = await Seguro.countDocuments();
+    if (count === 0) {
+      await Seguro.insertMany(defaultSeguros);
+      console.log("Seguros iniciales insertados");
+    }
+  })
   .catch((err) => console.error("Error al conectar MongoDB", err));
 
 app.use("/api/auth", authRoutes);
