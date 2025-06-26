@@ -23,8 +23,8 @@ async function login(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) return res.status(401).json({ error: 'Credenciales invalidas' });
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(401).json({ error: 'Credenciales invalidas' });
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(401).json({ error: 'Credenciales invalidas' });
   const token = generateToken();
   saveToken(token, user._id.toString());
   res.json({ token, name: user.name });
@@ -33,7 +33,7 @@ async function login(req, res) {
 exports.login = login;
 
 exports.getUsers = async (req, res) => {
-  const users = await User.find({}, '-password');
+  const users = await User.find().select('-password');
   res.json(users);
 };
 
