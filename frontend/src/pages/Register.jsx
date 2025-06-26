@@ -1,43 +1,62 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
 
-export default function Register() {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async e => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    if (!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(form.password)) {
-      setError('La contraseña debe tener 8 caracteres y combinar letras y números');
-      return;
-    }
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
     });
+
+    const data = await res.json();
     if (res.ok) {
-      setSuccess(true);
-      setTimeout(() => navigate('/login'), 1000);
+      alert(data.message || "Usuario registrado");
+      setName("");
+      setEmail("");
+      setPassword("");
     } else {
-      const data = await res.json();
-      setError(data.error || 'Error al registrar');
+      alert(data.message || "Error al registrar");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-4 flex flex-col gap-2">
-      <h1 className="text-xl font-bold text-center mb-2">Registro</h1>
-      {error && <p className="text-red-600 text-sm">{error}</p>}
-      {success && <p className="text-green-600 text-sm">Registro exitoso</p>}
-      <input name="name" placeholder="Nombre" onChange={handleChange} className="border p-2" />
-      <input name="email" placeholder="Correo" onChange={handleChange} className="border p-2" />
-      <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} className="border p-2" />
-      <button className="bg-blue-500 text-white p-2" type="submit">Registrarse</button>
-    </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Crear cuenta</h2>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Nombre"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+          <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold">
+            Registrarse
+          </button>
+        </form>
+      </div>
+    </div>
   );
-}
+};
+
+export default Register;
