@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
 import UploadPolicy from "./pages/UploadPolicy.jsx";
 import Contact from "./pages/Contact.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
 function Navbar() {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/recommendations" element={<Recommendations />} />
         <Route path="/upload-policy" element={<UploadPolicy />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

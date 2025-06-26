@@ -5,6 +5,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -17,13 +18,13 @@ const Register = () => {
 
     const data = await res.json();
     if (res.ok) {
-      alert(data.message || "Usuario registrado");
+      setMessage(data.message || "Usuario registrado");
       setName("");
       setEmail("");
       setPassword("");
-      navigate("/login");
+      setTimeout(() => navigate("/login"), 1000);
     } else {
-      alert(data.message || "Error al registrar");
+      setMessage(data.message || "Error al registrar");
     }
   };
 
@@ -56,6 +57,9 @@ const Register = () => {
           <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold">
             Registrarse
           </button>
+          {message && (
+            <p className="text-center mt-2 text-sm text-blue-600">{message}</p>
+          )}
         </form>
       </div>
     </div>

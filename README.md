@@ -35,3 +35,24 @@ Las rutas principales del frontend son:
 - `/recommendations`
 
 Estas páginas deberían mostrarse sin errores una vez que ambos servicios estén activos.
+
+## Pruebas rápidas con Thunder Client
+
+Puedes verificar el registro de usuarios y la obtención de la lista con las siguientes peticiones en Thunder Client:
+
+**Registrar usuario**
+
+```
+POST http://localhost:5000/api/auth/register
+{
+  "name": "ejemplo",
+  "email": "ejemplo@email.com",
+  "password": "123456"
+}
+```
+
+**Listar usuarios**
+
+```
+GET http://localhost:5000/api/auth/usuarios
+```
