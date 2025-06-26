@@ -3,22 +3,25 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import Compare from "./pages/Compare.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
-import Profile from "./pages/Profile.jsx";
 import UploadPolicy from "./pages/UploadPolicy.jsx";
+import Contact from "./pages/Contact.jsx";
+import { useAuth } from "./context/AuthContext.jsx";
 
 function Navbar() {
+  const { token, logout } = useAuth();
   return (
     <nav className="bg-white shadow px-4 py-3 mb-4">
       <ul className="flex flex-wrap gap-4 text-sm font-medium">
         <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        <li><Link to="/register">Registro</Link></li>
-        <li><Link to="/compare">Comparar</Link></li>
-        <li><Link to="/upload-policy">Subir Póliza</Link></li>
+        {token && <li><Link to="/dashboard">Cotizaciones</Link></li>}
         <li><Link to="/recommendations">Recomendaciones</Link></li>
-        <li><Link to="/profile">Perfil</Link></li>
+        {token && <li><Link to="/upload-policy">Pólizas</Link></li>}
+        <li><Link to="/contact">Contacto</Link></li>
+        {!token && <li><Link to="/login">Login</Link></li>}
+        {!token && <li><Link to="/register">Registro</Link></li>}
+        {token && <li><button onClick={logout}>Logout</button></li>}
       </ul>
     </nav>
   );
@@ -32,10 +35,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/compare" element={<Compare />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/recommendations" element={<Recommendations />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/upload-policy" element={<UploadPolicy />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );
