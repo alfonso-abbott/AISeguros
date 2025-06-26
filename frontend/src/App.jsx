@@ -8,6 +8,7 @@ import Cotizaciones from "./pages/Cotizaciones.jsx";
 import CotizacionesTipo from "./pages/CotizacionesTipo.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
 import UploadPolicy from "./pages/UploadPolicy.jsx";
+import CompararPoliza from "./pages/CompararPoliza.jsx";
 import Contact from "./pages/Contact.jsx";
 import SeguroDetalle from "./pages/SeguroDetalle.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
@@ -25,6 +26,11 @@ function Navbar() {
         </li>
         {token && <li><Link to="/recommendations">Recomendaciones</Link></li>}
         {token && <li><Link to="/upload-policy">Pólizas</Link></li>}
+        {token && (
+          <li>
+            <Link to="/comparar-poliza">Comparar Póliza</Link>
+          </li>
+        )}
         <li><Link to="/contact">Contacto</Link></li>
         {!token && (
           <>
@@ -63,6 +69,7 @@ function App() {
         <Route path="/cotizaciones/:tipo/:id" element={<SeguroDetalle />} />
         <Route path="/recommendations" element={<Recommendations />} />
         <Route path="/upload-policy" element={<UploadPolicy />} />
+        <Route path="/comparar-poliza" element={<CompararPoliza />} />
         <Route path="/seguro/:id" element={<SeguroDetalle />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
