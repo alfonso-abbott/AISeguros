@@ -10,7 +10,7 @@ import Contact from "./pages/Contact.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
 function Navbar() {
-  const { token, logout } = useAuth();
+  const { token, userName, logout } = useAuth();
   return (
     <nav className="bg-white shadow px-4 py-3 mb-4">
       <ul className="flex flex-wrap gap-4 text-sm font-medium">
@@ -21,6 +21,7 @@ function Navbar() {
         <li><Link to="/contact">Contacto</Link></li>
         {!token && <li><Link to="/login">Login</Link></li>}
         {!token && <li><Link to="/register">Registro</Link></li>}
+        {token && <li>Hola, {userName}</li>}
         {token && <li><button onClick={logout}>Logout</button></li>}
       </ul>
     </nav>
