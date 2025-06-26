@@ -19,9 +19,14 @@ export default function Home() {
           <a href="/cotizaciones" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg shadow">
             Ver Cotizaciones
           </a>
-          <a href="/register" className="bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-100 px-6 py-2 rounded-lg shadow">
-            Crear Cuenta
-          </a>
+          {!token && (
+            <a
+              href="/login"
+              className="bg-white border border-emerald-600 text-emerald-600 hover:bg-emerald-100 px-6 py-2 rounded-lg shadow"
+            >
+              Iniciar Sesión
+            </a>
+          )}
         </div>
       </div>
     </main>
