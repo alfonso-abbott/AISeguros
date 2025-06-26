@@ -10,7 +10,7 @@ Proyecto de ejemplo para ejecutar frontend y backend de forma local.
 1. Copiar el archivo `backend/.env.example` a `backend/.env` y ajustar las variables:
    ```
    MONGO_URI=mongodb://localhost/aiseguros
-   PORT=5000
+   PORT=5004
    ```
 2. Instalar dependencias y levantar el backend:
    ```bash
@@ -25,7 +25,7 @@ Proyecto de ejemplo para ejecutar frontend y backend de forma local.
    npm start
    ```
 
-El frontend quedará disponible en `http://localhost:5173` y enviará las peticiones al backend `http://localhost:5000` gracias a la configuración del proxy.
+El frontend quedará disponible en `http://localhost:5173` y enviará las peticiones al backend `http://localhost:5004` gracias a la configuración del proxy.
 
 Las rutas principales del frontend son:
 - `/login`
@@ -43,7 +43,7 @@ Puedes verificar el registro de usuarios y la obtención de la lista con las sig
 **Registrar usuario**
 
 ```
-POST http://localhost:5000/api/auth/register
+POST http://localhost:5004/api/auth/register
 {
   "name": "ejemplo",
   "email": "ejemplo@email.com",
@@ -54,6 +54,6 @@ POST http://localhost:5000/api/auth/register
 **Listar usuarios**
 
 ```
-GET http://localhost:5000/api/users
+GET http://localhost:5004/api/users
 Authorization: Bearer <token>
 ```

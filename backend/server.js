@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-let port = process.env.PORT ? Number(process.env.PORT) : 5000;
+let port = process.env.PORT ? Number(process.env.PORT) : 5004;
 
 // Rutas
 const authRoutes = require("./routes/auth");
