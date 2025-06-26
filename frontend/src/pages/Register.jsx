@@ -5,6 +5,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -14,18 +15,25 @@ export default function Register() {
       setError('La contraseña debe tener 8 caracteres y combinar letras y números');
       return;
     }
-    await fetch('/api/auth/register', {
+    const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
     });
-    navigate('/login');
+    if (res.ok) {
+      setSuccess(true);
+      setTimeout(() => navigate('/login'), 1000);
+    } else {
+      const data = await res.json();
+      setError(data.error || 'Error al registrar');
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-4 flex flex-col gap-2">
       <h1 className="text-xl font-bold text-center mb-2">Registro</h1>
       {error && <p className="text-red-600 text-sm">{error}</p>}
+      {success && <p className="text-green-600 text-sm">Registro exitoso</p>}
       <input name="name" placeholder="Nombre" onChange={handleChange} className="border p-2" />
       <input name="email" placeholder="Correo" onChange={handleChange} className="border p-2" />
       <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} className="border p-2" />
