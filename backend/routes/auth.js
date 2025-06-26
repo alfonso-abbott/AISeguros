@@ -10,7 +10,7 @@ const {
 
 router.post('/register', register);
 router.post('/login', login);
-router.get('/usuarios', getUsers);
+router.get('/users', getUsers);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
 
