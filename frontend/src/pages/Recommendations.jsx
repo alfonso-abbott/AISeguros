@@ -11,23 +11,41 @@ export default function Recommendations() {
     const res = await fetch('/api/recomendaciones', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
+      body: JSON.stringify({
+        edad: Number(form.edad),
+        tipo: form.tipo
+      })
     });
     setRecs(await res.json());
   };
 
   return (
-    <div className="p-4">
-      <form onSubmit={handleSubmit} className="flex flex-wrap gap-2 mb-4">
-        <input name="edad" placeholder="Edad" onChange={handleChange} className="border p-1" />
-        <input name="tipo" placeholder="Tipo" onChange={handleChange} className="border p-1" />
-        <button className="bg-blue-500 text-white px-3" type="submit">Obtener</button>
+    <div className="p-4 max-w-xl mx-auto">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mb-6">
+        <input
+          name="edad"
+          placeholder="Edad"
+          type="number"
+          onChange={handleChange}
+          className="border p-2 rounded flex-1"
+        />
+        <input
+          name="tipo"
+          placeholder="Tipo de seguro"
+          onChange={handleChange}
+          className="border p-2 rounded flex-1"
+        />
+        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded" type="submit">Obtener</button>
       </form>
-      <ul>
+      <div className="grid gap-4">
         {recs.map(r => (
-          <li key={r.id} className="border-b py-1">{r.name} - ${r.precio}</li>
+          <div key={r.id} className="border rounded shadow p-4">
+            <h3 className="font-semibold text-lg mb-1">{r.name}</h3>
+            <p className="text-sm text-gray-600 mb-2">Cobertura: {r.cobertura}</p>
+            <p className="font-bold">${r.precio}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
