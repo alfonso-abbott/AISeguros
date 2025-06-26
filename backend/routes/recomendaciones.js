@@ -1,15 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const mock = require('../utils/mockSeguros');
+const Seguro = require('../models/Seguro');
 
-router.post('/', (req, res) => {
-  const { edad, tipo } = req.body;
-  // lógica de ejemplo: filtrar por tipo y precio según edad
-  let seguros = mock.filter(s => !tipo || s.tipo === tipo);
-  if (edad < 30) seguros = seguros.filter(s => s.precio <= 150);
-  // mezclar para que las recomendaciones cambien
-  seguros = seguros.sort(() => Math.random() - 0.5);
-  res.json(seguros.slice(0, 3));
+router.post('/', async (req, res) => {
+  try {
+    const { tipo, edad, precio } = req.body;
+
+    const query = {};
+    if (tipo) query.tipo = tipo;
+
+    if (edad !== undefined && edad !== '') {
+      const edadNum = Number(edad);
+      if (!isNaN(edadNum)) {
+        query.edadMin = { $lte: edadNum };
+        query.edadMax = { $gte: edadNum };
+      }
+    }
+
+    if (precio) {
+      switch (precio) {
+        case 'low':
+          query.precio = { $lt: 100000 };
+          break;
+        case 'mid':
+          query.precio = { $gte: 100000, $lte: 200000 };
+          break;
+        case 'high':
+          query.precio = { $gt: 200000 };
+          break;
+        default:
+          if (!isNaN(Number(precio))) query.precio = Number(precio);
+      }
+    }
+
+    const seguros = await Seguro.find(query);
+    if (seguros.length === 0) {
+      return res.json({ message: 'No se encontraron coincidencias' });
+    }
+    res.json(seguros);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al obtener recomendaciones' });
+  }
 });
 
 module.exports = router;
